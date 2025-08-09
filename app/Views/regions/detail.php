@@ -14,10 +14,24 @@
 <!-- Region Header -->
 <section class="region-header">
     <div class="container">
-        <?php if (!empty($region['image'])): ?>
+        <?php 
+        $regionImageUrl = get_region_image_url($region['image'] ?? '');
+        ?>
+        
+        <?php if ($regionImageUrl): ?>
         <div class="region-image">
-            <img src="<?= base_url('uploads/regions/' . $region['image']) ?>" 
+            <img src="<?= $regionImageUrl ?>" 
                  alt="<?= esc($region['name']) ?>" loading="lazy">
+        </div>
+        <?php else: ?>
+        <div class="region-image">
+            <div class="region-placeholder">
+                <i class="fas fa-map-marked-alt"></i>
+                <div class="placeholder-text">
+                    <?= esc($region['name']) ?><br>
+                    <small>Wine Region</small>
+                </div>
+            </div>
         </div>
         <?php endif; ?>
         
@@ -60,7 +74,11 @@
         
         <?php if (empty($wineries)): ?>
             <div class="no-wineries">
-                <p>No active wineries found in this region yet. Check back soon!</p>
+                <div class="no-wineries-placeholder">
+                    <i class="fas fa-wine-glass-alt"></i>
+                    <h3>No wineries found</h3>
+                    <p>No active wineries found in this region yet. Check back soon!</p>
+                </div>
             </div>
         <?php else: ?>
             <div class="wineries-grid">
@@ -72,4 +90,81 @@
     </div>
 </section>
 
+<?= $this->endSection() ?>
+
+<?= $this->section('styles') ?>
+<style>
+.region-placeholder {
+    background: linear-gradient(135deg, #722f37 0%, #8b3a42 100%);
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.region-placeholder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="60" cy="30" r="1" fill="rgba(255,255,255,0.08)"/><circle cx="40" cy="70" r="2" fill="rgba(255,255,255,0.06)"/><circle cx="80" cy="80" r="1.2" fill="rgba(255,255,255,0.09)"/></svg>');
+    opacity: 0.3;
+}
+
+.region-placeholder i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    z-index: 1;
+}
+
+.region-placeholder .placeholder-text {
+    font-size: 1.2rem;
+    z-index: 1;
+    text-align: center;
+}
+
+.no-wineries {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.no-wineries-placeholder {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.no-wineries-placeholder i {
+    font-size: 4rem;
+    color: #722f37;
+    margin-bottom: 1rem;
+}
+
+.no-wineries-placeholder h3 {
+    color: #722f37;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+.no-wineries-placeholder p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .region-placeholder {
+        height: 250px;
+    }
+    
+    .region-placeholder i {
+        font-size: 3rem;
+    }
+}
+</style>
 <?= $this->endSection() ?>

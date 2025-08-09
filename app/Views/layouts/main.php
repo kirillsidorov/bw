@@ -23,7 +23,7 @@
     
     <!-- CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="<?= base_url('assets/css/style.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('public/assets/css/style.css') ?>" rel="stylesheet">
     
     <?= $this->renderSection('styles') ?>
 </head>
@@ -97,7 +97,7 @@
     </footer>
 
     <!-- JavaScript -->
-    <script src="<?= base_url('assets/js/main.js') ?>"></script>
+    <script src="<?= base_url('public/assets/js/main.js') ?>"></script>
     <?= $this->renderSection('scripts') ?>
 </body>
 </html>

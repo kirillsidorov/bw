@@ -216,7 +216,7 @@
             <div class="images-grid" id="featuredImages">
                 <?php if (!empty($winery['featured_image'])): ?>
                 <div class="image-item">
-                    <img src="<?= base_url('uploads/wineries/featured/' . $winery['featured_image']) ?>" 
+                    <img src="<?= base_url('uploads/wineries/featured/' . $winery['id'] . '/' . $winery['featured_image']) ?>" 
                          alt="Featured Image">
                     <div class="image-overlay">
                         <button class="btn btn-danger" 
@@ -250,11 +250,11 @@
             <div class="images-grid" id="galleryImages">
                 <?php 
                 $gallery = json_decode($winery['gallery'] ?? '[]', true);
-                if (!empty($gallery)):
+                if (!empty($gallery) && is_array($gallery)):
                     foreach ($gallery as $image): 
                 ?>
                 <div class="image-item">
-                    <img src="<?= base_url('uploads/wineries/gallery/' . $image) ?>" 
+                    <img src="<?= base_url('uploads/wineries/gallery/' . $winery['id'] . '/' . $image) ?>" 
                          alt="Gallery Image">
                     <div class="image-overlay">
                         <button class="btn btn-danger" 
@@ -291,7 +291,7 @@
             <div class="images-grid" id="logoImages">
                 <?php if (!empty($winery['logo'])): ?>
                 <div class="image-item">
-                    <img src="<?= base_url('uploads/wineries/logos/' . $winery['logo']) ?>" 
+                    <img src="<?= base_url('uploads/wineries/logos/' . $winery['id'] . '/' . $winery['logo']) ?>" 
                          alt="Logo">
                     <div class="image-overlay">
                         <button class="btn btn-danger" 

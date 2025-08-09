@@ -17,28 +17,83 @@
 <section class="winery-header">
     <div class="container">
         <div class="winery-images">
-            <?php if (!empty($winery['featured_image'])): ?>
-            <div class="featured-image">
-                <img src="<?= base_url('uploads/wineries/featured/' . $winery['featured_image']) ?>" 
-                     alt="<?= esc($winery['name']) ?>" loading="lazy">
-            </div>
-            <?php endif; ?>
+            <?php 
+            $featuredPath = '';
+            $featuredExists = false;
             
-            <?php if (!empty($winery['gallery'])): ?>
+            if (!empty($winery['featured_image'])) {
+                $featuredPath = FCPATH . 'uploads/wineries/featured/' . $winery['id'] . '/' . $winery['featured_image'];
+                $featuredExists = file_exists($featuredPath);
+            }
+            ?>
+            
+            <div class="featured-image">
+                <?php if ($featuredExists): ?>
+                    <img src="<?= base_url('uploads/wineries/featured/' . $winery['id'] . '/' . $winery['featured_image']) ?>" 
+                         alt="<?= esc($winery['name']) ?>" loading="lazy">
+                <?php else: ?>
+                    <div class="featured-placeholder">
+                        <i class="fas fa-wine-glass-alt"></i>
+                        <div class="placeholder-text">
+                            <?= esc($winery['name']) ?><br>
+                            <small>Featured Image</small>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+            
+            <?php if (!empty($winery['gallery']) && is_array($winery['gallery'])): ?>
             <div class="gallery-thumbnails">
-                <?php foreach (array_slice($winery['gallery'], 0, 4) as $image): ?>
-                <img src="<?= base_url('uploads/wineries/gallery/' . $image) ?>" 
+                <?php 
+                $galleryCount = 0;
+                foreach (array_slice($winery['gallery'], 0, 4) as $image): 
+                    $galleryPath = FCPATH . 'uploads/wineries/gallery/' . $winery['id'] . '/' . $image;
+                    if (file_exists($galleryPath)):
+                        $galleryCount++;
+                ?>
+                <img src="<?= base_url('uploads/wineries/gallery/' . $winery['id'] . '/' . $image) ?>" 
                      alt="<?= esc($winery['name']) ?>" class="gallery-thumb" loading="lazy">
-                <?php endforeach; ?>
+                <?php 
+                    endif;
+                endforeach; 
+                
+                // Fill remaining slots with placeholders if we have less than 4 images
+                for ($i = $galleryCount; $i < 4; $i++):
+                ?>
+                <div class="gallery-placeholder">
+                    <i class="fas fa-image"></i>
+                </div>
+                <?php endfor; ?>
+            </div>
+            <?php else: ?>
+            <div class="gallery-thumbnails">
+                <div class="gallery-placeholder"><i class="fas fa-image"></i></div>
+                <div class="gallery-placeholder"><i class="fas fa-image"></i></div>
+                <div class="gallery-placeholder"><i class="fas fa-image"></i></div>
+                <div class="gallery-placeholder"><i class="fas fa-image"></i></div>
             </div>
             <?php endif; ?>
         </div>
         
         <div class="winery-main-info">
             <div class="winery-title">
-                <?php if (!empty($winery['logo'])): ?>
-                <img src="<?= base_url('uploads/wineries/logos/' . $winery['logo']) ?>" 
-                     alt="<?= esc($winery['name']) ?> logo" class="winery-logo">
+                <?php 
+                $logoPath = '';
+                $logoExists = false;
+                
+                if (!empty($winery['logo'])) {
+                    $logoPath = FCPATH . 'uploads/wineries/logos/' . $winery['id'] . '/' . $winery['logo'];
+                    $logoExists = file_exists($logoPath);
+                }
+                ?>
+                
+                <?php if ($logoExists): ?>
+                    <img src="<?= base_url('uploads/wineries/logos/' . $winery['id'] . '/' . $winery['logo']) ?>" 
+                         alt="<?= esc($winery['name']) ?> logo" class="winery-logo">
+                <?php else: ?>
+                    <div class="logo-placeholder">
+                        <?= strtoupper(substr($winery['name'], 0, 1)) ?>
+                    </div>
                 <?php endif; ?>
                 <h1><?= esc($winery['name']) ?></h1>
             </div>
@@ -72,10 +127,23 @@
                 <?php if (!empty($winery['wine_types'])): ?>
                 <span class="highlight">
                     <i class="fas fa-wine-glass"></i>
-                    <?= implode(', ', array_map('ucfirst', $winery['wine_types'])) ?>
+                    <?php 
+                    $wine_types = is_string($winery['wine_types']) ? json_decode($winery['wine_types'], true) : $winery['wine_types'];
+                    if (is_array($wine_types)):
+                        echo implode(', ', array_map('ucfirst', $wine_types));
+                    endif;
+                    ?>
                 </span>
                 <?php endif; ?>
             </div>
+
+            <!-- Add Admin Link for Image Management
+            <div class="admin-actions" style="margin-top: 1rem;">
+                <a href="<?= base_url('admin/images/' . $winery['slug']) ?>" class="btn btn-secondary">
+                    <i class="fas fa-images"></i> Manage Images
+                </a>
+            </div>
+                -->
         </div>
     </div>
 </section>
@@ -215,7 +283,7 @@
                         <?php if (!empty($winery['website'])): ?>
                         <div class="contact-item">
                             <i class="fas fa-globe"></i>
-                            <a href="<?= esc($winery['website']) ?>" target="_blank" rel="noopener">
+                            <a href="<?= esc($winery['website']) ?>" target="_blank" rel="noopener nofollow">
                                 Visit Website
                             </a>
                         </div>
@@ -261,7 +329,14 @@
                         <?php if (!empty($winery['grape_varieties'])): ?>
                         <div class="fact-item">
                             <strong>Grape Varieties:</strong>
-                            <span><?= implode(', ', $winery['grape_varieties']) ?></span>
+                            <span>
+                                <?php 
+                                $grape_varieties = is_string($winery['grape_varieties']) ? json_decode($winery['grape_varieties'], true) : $winery['grape_varieties'];
+                                if (is_array($grape_varieties)):
+                                    echo implode(', ', $grape_varieties);
+                                endif;
+                                ?>
+                            </span>
                         </div>
                         <?php endif; ?>
 
@@ -275,7 +350,14 @@
                         <?php if (!empty($winery['languages'])): ?>
                         <div class="fact-item">
                             <strong>Languages:</strong>
-                            <span><?= implode(', ', $winery['languages']) ?></span>
+                            <span>
+                                <?php 
+                                $languages = is_string($winery['languages']) ? json_decode($winery['languages'], true) : $winery['languages'];
+                                if (is_array($languages)):
+                                    echo implode(', ', $languages);
+                                endif;
+                                ?>
+                            </span>
                         </div>
                         <?php endif; ?>
 

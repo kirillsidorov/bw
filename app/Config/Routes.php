@@ -7,14 +7,25 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 
+// Test routes
 $routes->get('/test/database', 'Test::database');
 
-// Страницы регионов
-$routes->get('/(:segment)', 'Regions::detail/$1');
+// Debug routes
+$routes->get('/image-debug', 'ImageDebug::index');
+$routes->post('/image-debug/create-directories', 'ImageDebug::createDirectories');
 
-// Страницы виноделен  
-$routes->get('/winery/(:segment)', 'Wineries::detail/$1');
-
+// Image management routes
 $routes->get('/admin/images/(:segment)', 'ImageUpload::manage/$1');
 $routes->post('/image-upload/upload', 'ImageUpload::upload');
 $routes->post('/image-upload/delete', 'ImageUpload::delete');
+
+// Static pages
+$routes->get('/about', 'Pages::about');
+$routes->get('/contact', 'Pages::contact');
+$routes->get('/privacy-policy', 'Pages::privacy');
+
+// Winery pages  
+$routes->get('/winery/(:segment)', 'Wineries::detail/$1');
+
+// Region pages (should be last to avoid conflicts)
+$routes->get('/(:segment)', 'Regions::detail/$1');

@@ -1,11 +1,16 @@
 <div class="winery-card">
     <div class="winery-image">
-        <?php if (!empty($winery['featured_image'])): ?>
-            <img src="<?= base_url('uploads/wineries/featured/' . $winery['id'] . '/' . $winery['featured_image']) ?>" 
+        <?php 
+        $featuredImageUrl = get_winery_image_url($winery['id'], 'featured', $winery['featured_image'] ?? '');
+        ?>
+        
+        <?php if ($featuredImageUrl): ?>
+            <img src="<?= $featuredImageUrl ?>" 
                  alt="<?= esc($winery['name']) ?>" loading="lazy">
         <?php else: ?>
             <div class="winery-placeholder">
                 <i class="fas fa-wine-glass-alt"></i>
+                <div class="placeholder-text"><?= esc($winery['name']) ?></div>
             </div>
         <?php endif; ?>
         
@@ -35,36 +40,44 @@
         
         <div class="winery-features">
             <?php if (!empty($winery['wine_types'])): ?>
-                <?php foreach (array_slice($winery['wine_types'], 0, 3) as $type): ?>
+                <?php 
+                // Handle both JSON string and array formats
+                $wine_types = is_string($winery['wine_types']) ? json_decode($winery['wine_types'], true) : $winery['wine_types'];
+                if (is_array($wine_types) && !empty($wine_types)):
+                    foreach (array_slice($wine_types, 0, 3) as $type): 
+                ?>
                 <span class="feature-tag"><?= ucfirst($type) ?></span>
-                <?php endforeach; ?>
+                <?php 
+                    endforeach;
+                endif;
+                ?>
             <?php endif; ?>
             
-            <?php if ($winery['organic_production']): ?>
+            <?php if (!empty($winery['organic_production'])): ?>
             <span class="feature-tag organic">Organic</span>
             <?php endif; ?>
         </div>
         
         <div class="winery-services">
-            <?php if ($winery['tours_available']): ?>
+            <?php if (!empty($winery['tours_available'])): ?>
             <span class="service-icon" title="Tours Available">
                 <i class="fas fa-route"></i>
             </span>
             <?php endif; ?>
             
-            <?php if ($winery['tastings_available']): ?>
+            <?php if (!empty($winery['tastings_available'])): ?>
             <span class="service-icon" title="Tastings Available">
                 <i class="fas fa-wine-glass-alt"></i>
             </span>
             <?php endif; ?>
             
-            <?php if ($winery['restaurant_available']): ?>
+            <?php if (!empty($winery['restaurant_available'])): ?>
             <span class="service-icon" title="Restaurant">
                 <i class="fas fa-utensils"></i>
             </span>
             <?php endif; ?>
             
-            <?php if ($winery['wine_shop']): ?>
+            <?php if (!empty($winery['wine_shop'])): ?>
             <span class="service-icon" title="Wine Shop">
                 <i class="fas fa-shopping-bag"></i>
             </span>
