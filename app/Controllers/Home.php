@@ -12,33 +12,45 @@ class Home extends BaseController
         $wineryModel = new WineryModel();
         $regionModel = new RegionModel();
 
-        // Get filters from request
+        // Получаем фильтры из GET параметров
         $filters = [
             'search' => $this->request->getGet('search'),
             'region_id' => $this->request->getGet('region'),
-            'price_category' => $this->request->getGet('price_category'),
             'wine_type' => $this->request->getGet('wine_type'),
+            'price_category' => $this->request->getGet('price_category'),
             'tours' => $this->request->getGet('tours'),
             'tastings' => $this->request->getGet('tastings'),
             'restaurant' => $this->request->getGet('restaurant'),
-            'organic' => $this->request->getGet('organic'),
+            'organic' => $this->request->getGet('organic')
         ];
 
-        // Remove empty filters
+        // Убираем пустые значения
         $filters = array_filter($filters, function($value) {
             return !empty($value);
         });
 
-        // Get wineries based on filters
+        // Получаем винодельни с учетом фильтров
         if (!empty($filters)) {
-            $wineries = $wineryModel->getFilteredWineries($filters);
+            $wineries = $wineryModel->getFiltered($filters);
         } else {
-            $wineries = $wineryModel->getWithRegion();
+            // Если фильтров нет, показываем featured винодельни
+            $wineries = $wineryModel->getFeatured(12);
+        }
+
+        // Декодируем JSON поля для каждой винодельни
+        foreach ($wineries as &$winery) {
+            $jsonFields = ['wine_types', 'grape_varieties', 'languages', 'gallery'];
+            foreach ($jsonFields as $field) {
+                if (!empty($winery[$field]) && is_string($winery[$field])) {
+                    $winery[$field] = json_decode($winery[$field], true);
+                }
+            }
         }
 
         $data = [
             'title' => 'Barcelona Wineries - Discover Premium Wineries Near Barcelona',
-            'meta_description' => 'Explore the finest wineries near Barcelona. Wine tours, tastings, and premium experiences in Catalonia\'s beautiful wine regions.',
+            'meta_description' => 'Discover the best wineries near Barcelona. Wine tours, tastings, and premium wine experiences in Catalonia. Find your perfect winery visit today.',
+            'meta_keywords' => 'Barcelona wineries, Catalonia wine tours, wine tasting Barcelona, Spanish wineries, Penedès wine region',
             'wineries' => $wineries,
             'regions' => $regionModel->getActive(),
             'filters' => $filters,

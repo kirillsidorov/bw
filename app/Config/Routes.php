@@ -29,3 +29,7 @@ $routes->get('/winery/(:segment)', 'Wineries::detail/$1');
 
 // Region pages (should be last to avoid conflicts)
 $routes->get('/(:segment)', 'Regions::detail/$1');
+
+// AJAX endpoints для API
+$routes->get('/winery-info/(:segment)', 'Wineries::getWineryInfo/$1');
+$routes->get('/wineries/search', 'Wineries::search');

@@ -1,20 +1,15 @@
 <div class="winery-card">
     <div class="winery-image">
-        <?php 
-        $featuredImageUrl = get_winery_image_url($winery['id'], 'featured', $winery['featured_image'] ?? '');
-        ?>
-        
-        <?php if ($featuredImageUrl): ?>
-            <img src="<?= $featuredImageUrl ?>" 
+        <?php if (!empty($winery['featured_image'])): ?>
+            <img src="<?= base_url('uploads/wineries/featured/' . $winery['id'] . '/' . $winery['featured_image']) ?>" 
                  alt="<?= esc($winery['name']) ?>" loading="lazy">
         <?php else: ?>
             <div class="winery-placeholder">
                 <i class="fas fa-wine-glass-alt"></i>
-                <div class="placeholder-text"><?= esc($winery['name']) ?></div>
             </div>
         <?php endif; ?>
         
-        <?php if ($winery['featured']): ?>
+        <?php if (!empty($winery['featured']) && $winery['featured']): ?>
         <span class="featured-badge">Featured</span>
         <?php endif; ?>
     </div>
@@ -29,6 +24,9 @@
         <div class="winery-location">
             <i class="fas fa-map-marker-alt"></i>
             <span><?= esc($winery['region_name'] ?? 'Unknown Region') ?></span>
+            <?php if (!empty($winery['drive_time_from_barcelona'])): ?>
+            <span class="drive-time"> • <?= esc($winery['drive_time_from_barcelona']) ?> from Barcelona</span>
+            <?php endif; ?>
         </div>
         
         <?php if (!empty($winery['short_description'])): ?>
@@ -39,47 +37,92 @@
         <?php endif; ?>
         
         <div class="winery-features">
-            <?php if (!empty($winery['wine_types'])): ?>
-                <?php 
-                // Handle both JSON string and array formats
-                $wine_types = is_string($winery['wine_types']) ? json_decode($winery['wine_types'], true) : $winery['wine_types'];
-                if (is_array($wine_types) && !empty($wine_types)):
-                    foreach (array_slice($wine_types, 0, 3) as $type): 
-                ?>
+            <?php 
+            $wineTypes = [];
+            if (!empty($winery['wine_types'])) {
+                $wineTypes = is_string($winery['wine_types']) ? json_decode($winery['wine_types'], true) : $winery['wine_types'];
+            }
+            if (!empty($wineTypes)): 
+            ?>
+                <?php foreach (array_slice($wineTypes, 0, 3) as $type): ?>
                 <span class="feature-tag"><?= ucfirst($type) ?></span>
-                <?php 
-                    endforeach;
-                endif;
-                ?>
+                <?php endforeach; ?>
             <?php endif; ?>
             
-            <?php if (!empty($winery['organic_production'])): ?>
+            <?php if (!empty($winery['organic_production']) && $winery['organic_production']): ?>
             <span class="feature-tag organic">Organic</span>
+            <?php endif; ?>
+
+            <?php if (!empty($winery['family_winery']) && $winery['family_winery']): ?>
+            <span class="feature-tag family">Family Winery</span>
+            <?php endif; ?>
+
+            <?php if (!empty($winery['price_category'])): ?>
+            <span class="feature-tag price-tag">
+                <?php 
+                $priceLabels = [
+                    'budget' => '€-€€',
+                    'mid-range' => '€€-€€€',
+                    'premium' => '€€€-€€€€',
+                    'luxury' => '€€€€+'
+                ];
+                echo $priceLabels[$winery['price_category']] ?? ucfirst(str_replace('-', ' ', $winery['price_category']));
+                ?>
+            </span>
             <?php endif; ?>
         </div>
         
         <div class="winery-services">
-            <?php if (!empty($winery['tours_available'])): ?>
+            <?php if (!empty($winery['tours_available']) && $winery['tours_available']): ?>
             <span class="service-icon" title="Tours Available">
                 <i class="fas fa-route"></i>
             </span>
             <?php endif; ?>
             
-            <?php if (!empty($winery['tastings_available'])): ?>
+            <?php if (!empty($winery['tastings_available']) && $winery['tastings_available']): ?>
             <span class="service-icon" title="Tastings Available">
                 <i class="fas fa-wine-glass-alt"></i>
             </span>
             <?php endif; ?>
             
-            <?php if (!empty($winery['restaurant_available'])): ?>
+            <?php if (!empty($winery['restaurant_available']) && $winery['restaurant_available']): ?>
             <span class="service-icon" title="Restaurant">
                 <i class="fas fa-utensils"></i>
             </span>
             <?php endif; ?>
             
-            <?php if (!empty($winery['wine_shop'])): ?>
+            <?php if (!empty($winery['wine_shop']) && $winery['wine_shop']): ?>
             <span class="service-icon" title="Wine Shop">
                 <i class="fas fa-shopping-bag"></i>
+            </span>
+            <?php endif; ?>
+
+            <?php if (!empty($winery['accommodation_available']) && $winery['accommodation_available']): ?>
+            <span class="service-icon" title="Accommodation">
+                <i class="fas fa-bed"></i>
+            </span>
+            <?php endif; ?>
+
+            <?php if (!empty($winery['events_weddings']) && $winery['events_weddings']): ?>
+            <span class="service-icon" title="Events & Weddings">
+                <i class="fas fa-heart"></i>
+            </span>
+            <?php endif; ?>
+        </div>
+
+        <!-- Additional info row -->
+        <div class="winery-meta-info">
+            <?php if (!empty($winery['founded_year'])): ?>
+            <span class="meta-item">
+                <i class="fas fa-calendar-alt"></i>
+                Est. <?= $winery['founded_year'] ?>
+            </span>
+            <?php endif; ?>
+
+            <?php if (!empty($winery['booking_required']) && $winery['booking_required'] !== 'not_required'): ?>
+            <span class="meta-item booking-required">
+                <i class="fas fa-clock"></i>
+                <?= $winery['booking_required'] === 'required' ? 'Booking Required' : 'Booking Recommended' ?>
             </span>
             <?php endif; ?>
         </div>

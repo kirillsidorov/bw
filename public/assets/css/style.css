@@ -1079,3 +1079,434 @@ body {
         font-size: 3rem;
     }
 }
+
+/* Дополнительные стили для расширенной страницы винодельни */
+
+/* Price indicator styles */
+.winery-meta {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+.price-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.price-label {
+    font-weight: 600;
+    color: #333;
+}
+
+.price-badges {
+    display: flex;
+    gap: 0.2rem;
+}
+
+.price-badge {
+    color: #ddd;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.price-badge.active {
+    color: #722f37;
+}
+
+/* Wine info grid */
+.wine-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.wine-info-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 4px solid #722f37;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+
+.wine-info-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.wine-info-item h3 {
+    color: #722f37;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.wine-info-item p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Facilities grid */
+.facilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.facility-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: background 0.2s;
+}
+
+.facility-item:hover {
+    background: #f8f9fa;
+}
+
+.facility-item i {
+    color: #722f37;
+    width: 20px;
+    font-size: 1.1rem;
+}
+
+/* Seasonal information */
+.seasonal-info {
+    background: linear-gradient(135deg, #e8f4fd, #f0f8ff);
+    padding: 1.5rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    border: 1px solid #ddeeff;
+}
+
+.seasonal-info i {
+    color: #0066cc;
+    font-size: 1.5rem;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+}
+
+.seasonal-info p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Enhanced sidebar styles */
+.hours-item, .fact-item, .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.hours-item:last-child, 
+.fact-item:last-child, 
+.contact-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.hours-item i, 
+.fact-item i, 
+.contact-item i {
+    color: #722f37;
+    width: 20px;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+}
+
+.hours-item div, 
+.fact-item div {
+    flex: 1;
+}
+
+.hours-item strong, 
+.fact-item strong {
+    display: block;
+    color: #333;
+    margin-bottom: 0.2rem;
+}
+
+/* Map container */
+.map-container {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.map-container a {
+    color: #722f37;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.map-container a:hover {
+    text-decoration: underline;
+}
+
+/* Enhanced services grid */
+.services-grid .service-item {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.services-grid .service-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* Enhanced transport options */
+.transport-options .transport-item {
+    transition: transform 0.2s;
+}
+
+.transport-options .transport-item:hover {
+    transform: translateY(-2px);
+}
+
+/* Booking note enhancement */
+.booking-note {
+    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.booking-note i {
+    color: #856404;
+    font-size: 1.1rem;
+}
+
+/* Gallery thumb enhancements */
+.gallery-thumb {
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+    border-radius: 8px;
+}
+
+.gallery-thumb:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* Winery logo styling */
+.winery-logo {
+    max-width: 60px;
+    max-height: 60px;
+    object-fit: contain;
+    margin-right: 1rem;
+    border-radius: 8px;
+}
+
+/* Featured image fallback */
+.winery-placeholder {
+    height: 300px;
+    background: linear-gradient(45deg, #722f37, #8b3a42);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 4rem;
+    border-radius: 15px;
+}
+
+/* Admin management button */
+.winery-title .btn {
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .winery-title {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .winery-title .btn {
+        align-self: flex-start;
+    }
+    
+    .wine-info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .facilities-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .price-indicator {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+    }
+    
+    .seasonal-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .hours-item, .fact-item, .contact-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .hours-item i, .fact-item i, .contact-item i {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .facilities-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .wine-info-item {
+        padding: 1rem;
+    }
+    
+    .seasonal-info {
+        padding: 1rem;
+    }
+    
+    .facility-item {
+        padding: 0.8rem;
+    }
+}
+/* Дополнительные стили для расширенной карточки винодельни */
+
+/* Drive time info */
+.winery-location .drive-time {
+    color: #666;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+/* Enhanced feature tags */
+.feature-tag.family {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+.feature-tag.price-tag {
+    background: #f3e5f5;
+    color: #7b1fa2;
+    font-weight: bold;
+}
+
+/* Winery meta info */
+.winery-meta-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0;
+    padding-top: 1rem;
+    border-top: 1px solid #f0f0f0;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.meta-item i {
+    color: #722f37;
+    font-size: 0.8rem;
+}
+
+.meta-item.booking-required {
+    color: #e65100;
+    font-weight: 500;
+}
+
+.meta-item.booking-required i {
+    color: #e65100;
+}
+
+/* Enhanced services icons */
+.winery-services {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+    padding: 0.8rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.service-icon {
+    color: #722f37;
+    font-size: 1.2rem;
+    transition: color 0.2s, transform 0.2s;
+    cursor: help;
+}
+
+.service-icon:hover {
+    color: #8b3a42;
+    transform: scale(1.1);
+}
+
+/* Responsive adjustments for cards */
+@media (max-width: 768px) {
+    .winery-meta-info {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .winery-services {
+        gap: 0.8rem;
+        justify-content: center;
+    }
+    
+    .winery-location .drive-time {
+        display: block;
+        margin-top: 0.2rem;
+    }
+}
+
+/* Tooltip style for service icons */
+.service-icon[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.3rem 0.6rem;
+    background: #333;
+    color: white;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.service-icon {
+    position: relative;
+}
