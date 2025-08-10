@@ -35,6 +35,16 @@ class Home extends BaseController
         } else {
             // Если фильтров нет, показываем featured винодельни
             $wineries = $wineryModel->getFeatured(12);
+            // Если featured мало, дополняем обычными
+            if (count($wineries) < 8) {
+                $additionalWineries = $wineryModel->getWithRegion();
+                // Убираем уже показанные featured
+                $featuredIds = array_column($wineries, 'id');
+                $additionalWineries = array_filter($additionalWineries, function($winery) use ($featuredIds) {
+                    return !in_array($winery['id'], $featuredIds);
+                });
+                $wineries = array_merge($wineries, array_slice($additionalWineries, 0, 12 - count($wineries)));
+            }
         }
 
         // Декодируем JSON поля для каждой винодельни

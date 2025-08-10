@@ -82,6 +82,22 @@ class WineryModel extends Model
     }
 
     /**
+     * Получить винодельни по региону
+     */
+    public function getByRegion($regionId)
+    {
+        return $this->db->table($this->table)
+            ->select('wineries.*, regions.name as region_name, regions.slug as region_slug')
+            ->join('regions', 'regions.id = wineries.region_id', 'left')
+            ->where('wineries.region_id', $regionId)
+            ->where('wineries.status', 'active')
+            ->orderBy('wineries.featured', 'DESC')
+            ->orderBy('wineries.name', 'ASC')
+            ->get()
+            ->getResultArray();
+    }
+
+    /**
      * Получить винодельни с фильтрацией
      */
     public function getFiltered($filters = [])

@@ -45,8 +45,8 @@
                         <?php endforeach; ?>
                     </ul>
                 </li>
-                <li><a href="<?= base_url('about') ?>">About</a></li>
-                <li><a href="<?= base_url('contact') ?>">Contact</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
             </ul>
             <button class="mobile-menu" id="mobileMenuBtn">
                 <i class="fas fa-bars"></i>
