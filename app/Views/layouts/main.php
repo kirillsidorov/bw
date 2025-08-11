@@ -24,6 +24,16 @@
     <!-- CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="<?= base_url('public/assets/css/style.css') ?>" rel="stylesheet">
+    <script src="https://analytics.ahrefs.com/analytics.js" data-key="Kzej6T0HXVnyMeMT87ueDA" async></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2SQR72XCE3"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-2SQR72XCE3');
+    </script>
     
     <?= $this->renderSection('styles') ?>
 </head>
